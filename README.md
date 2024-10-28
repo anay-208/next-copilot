@@ -3,6 +3,8 @@
 This extension will help you with Next.js app router. 
 
 It has the latest docs to assist you.
+ 
+Install the extension from [https://github.com/apps/next-copilot](https://github.com/apps/next-copilot)
 
 # How It works
 
@@ -10,3 +12,10 @@ It has the latest docs to assist you.
 - As soon as you send a message, it'll pass a message to a different instance of Copilot LLM, passing the messages to determine which docs are relevant to the problem i.e. that can solve the problem (Done in [messages.ts](./api/messages.ts)). 
 - Once done, it passes all those docs to the chat instance, using the same Copilot LLM, but with Gpt-4o model. The main part about this is sending messages, guiding Copilot LLM how to reply & help the user.
 - The response is streamed to the user
+
+
+# Why this extension
+
+I primarily built this extension so that one can:
+- Get Next.js Docs Directly from their Code editor
+- Get Direct Code examples from copilot
