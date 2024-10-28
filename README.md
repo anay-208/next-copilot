@@ -6,6 +6,12 @@ It has the latest docs to assist you.
  
 Install the extension from [https://github.com/apps/next-copilot](https://github.com/apps/next-copilot)
 
+
+If this project has been helpful to you, please consider giving it a star! 🌟 
+
+You can also support my work further by [sponsoring me!](https://github.com/sponsors/anay-208/) Your contributions will help me take on more open-source projects!
+
+
 # How It works
 
 - I've manually downloaded the parts of docs, and included the most relevant ones in [docs folder](./docs)
@@ -19,3 +25,4 @@ Install the extension from [https://github.com/apps/next-copilot](https://github
 I primarily built this extension so that one can:
 - Get Next.js Docs Directly from their Code editor
 - Get Direct Code examples from copilot
+
