@@ -1,4 +1,5 @@
 import express from "express";
+import { Hono } from "hono";
 import { Readable } from "node:stream";
 import fs from "node:fs";
 import path from "node:path";
@@ -11,21 +12,28 @@ import {
   InteropMessage,
   MessageRole,
 } from "@copilot-extensions/preview-sdk";
-import { getAllFilesRelativePaths } from "./utils.js";
 import bodyParser from "body-parser";
 import getPaths from "./messages.js";
-
+import { fileURLToPath } from 'url';
 const app = express();
-const log = (...args : any[]) => {
-  if(process.env.NODE_ENV === "development") {
+const log = (...args: any[]) => {
+  if (process.env.NODE_ENV === "development") {
     console.log(...args);
   }
-}
+};
+
+
+// Get dirname as __dirname doesn't work in this es version
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+
+
 
 app.use(bodyParser.json());
 
 app.get("/", async (req, res) => {
-  res.send("Hello World!");
+  res.redirect("https://github.com/anay-208/next-copilot");
 });
 
 interface Headers extends Record<string, string> {
@@ -39,10 +47,10 @@ app.post("/", async (req, res) => {
   let verifyAndParseRequestResult: Awaited<
     ReturnType<typeof verifyAndParseRequest>
   >;
-  const headers : Headers = req.headers as Headers;
+  const headers: Headers = req.headers as Headers;
   const apiKey = headers["x-github-token"];
   try {
-    const signature = headers["github-public-key-signature"] ;
+    const signature = headers["github-public-key-signature"];
     const keyID = headers["github-public-key-identifier"];
     verifyAndParseRequestResult = await verifyAndParseRequest(
       JSON.stringify(req.body),
@@ -55,7 +63,6 @@ app.post("/", async (req, res) => {
     res.end("Unauthorized");
     return;
   }
-
 
   const { payload } = verifyAndParseRequestResult;
 
@@ -71,6 +78,7 @@ app.post("/", async (req, res) => {
     return;
   }
 
+  // Get Path of Documentations to give to user
   const paths = await getPaths(messages, apiKey, userMessage);
   messages.push({
     role: "system",
@@ -83,33 +91,36 @@ app.post("/", async (req, res) => {
      `,
   });
   messages.push(userMessage);
-  
+
+  // Give Documentation to LLM
   if (paths) {
     messages.push({
       role: "system",
       content: `Here are the documentation that you need to refer to help the user.`,
-    })
+    });
     for (const docPath of paths) {
-      log(`providing ${docPath}`)
-      const file = fs.readFileSync(path.join(__dirname, "../docs", docPath));
-      messages.push({
-        role: "system",
-        content: file.toString(),
-      });
+      if (fs.existsSync(path.join(dirname, "../docs", docPath))) {
+        log(`providing ${docPath}`);
+        const file = fs.readFileSync(path.join(dirname, "../docs", docPath));
+        messages.push({
+          role: "system",
+          content: file.toString(),
+        });
+      }
     }
     messages.push({
       role: "system",
       content: `Now, You need to help the user with this. Don't send any documentation links, and it should be related to App dir only! Try to only help the user with the topic, and don't give too much additional information.`,
-    })
-  } 
+    });
+  }
   // Use Copilot's LLM to generate a response to the user's messages, with
   // our extra system messages attached.
 
-  const {stream} = await prompt.stream({
+  const { stream } = await prompt.stream({
     model: "gpt-4o",
     messages: messages,
     token: apiKey,
-  })
+  });
 
   const reader = stream.getReader();
   const nodeStream = new Readable({
@@ -120,7 +131,7 @@ app.post("/", async (req, res) => {
       } else {
         this.push(Buffer.from(value));
       }
-    }
+    },
   });
 
   nodeStream.pipe(res);
@@ -130,3 +141,6 @@ const port = Number(process.env.PORT || "8080");
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+// for vercel
+export default app;

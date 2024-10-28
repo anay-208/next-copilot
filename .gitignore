@@ -176,3 +176,4 @@ dist
 
 # Fly.io config
 fly.toml
+.vercel

@@ -2,9 +2,7 @@
   "name": "blackbeard-extension",
   "description": "A basic example of a Copilot Extension",
   "scripts": {
-    "build": "npm run compile",
-    "compile": "tsc && npm run copy-docs",
-    "copy-docs": "copyfiles docs/**/* dist",
+    "compile": "tsc",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "dev": "cross-env NODE_ENV=development bun --watch src/index.ts"
   },
@@ -13,16 +11,14 @@
     "@copilot-extensions/preview-sdk": "^5.0.1",
     "@octokit/core": "^6.1.2",
     "body-parser": "^1.20.3",
-    "copyfiles": "^2.4.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "hono": "^4.6.7"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/express": "^5.0.0",
     "bun": "^1.1.33",
     "cross-env": "^7.0.3",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   }
 }

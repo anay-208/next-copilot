@@ -7,13 +7,15 @@ import { getAllFilesRelativePaths } from "./utils.js";
 import path from "node:path";
 import { fileURLToPath } from 'url';
 import { hints } from "./types.js";
+import fs from "node:fs";
 
+console.log(fs.readdirSync("."))
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 
-const docsPath = path.join(dirname, "./docs");
+const docsPath = path.join(dirname, "../docs");
 const list = getAllFilesRelativePaths(docsPath);
 
 export default async function getPaths(

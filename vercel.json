@@ -1,4 +1,14 @@
 {
-	"version": 2,
-	"rewrites": [{ "source": "/(.*)", "destination": "/dist" }]
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api"
+        }
+    ],
+    "functions": {
+        "api/*": {
+            "includeFiles": "docs/**/*"
+        }
+    }
 }
