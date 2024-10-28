@@ -15,7 +15,10 @@ import {
 import bodyParser from "body-parser";
 import getPaths from "./messages.js";
 import { fileURLToPath } from 'url';
+
+
 const app = express();
+
 const log = (...args: any[]) => {
   if (process.env.NODE_ENV === "development") {
     console.log(...args);
@@ -24,11 +27,8 @@ const log = (...args: any[]) => {
 
 
 // Get dirname as __dirname doesn't work in this es version
-
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-
-
 
 app.use(bodyParser.json());
 
@@ -43,6 +43,7 @@ interface Headers extends Record<string, string> {
 }
 
 app.post("/", async (req, res) => {
+  try {
   // Verify Request
   let verifyAndParseRequestResult: Awaited<
     ReturnType<typeof verifyAndParseRequest>
@@ -135,6 +136,11 @@ app.post("/", async (req, res) => {
   });
 
   nodeStream.pipe(res);
+} catch (err){
+  console.error(err);
+  res.write(createTextEvent("An Error occured"))
+  res.status(500).end(createDoneEvent());
+}
 });
 
 const port = Number(process.env.PORT || "8080");

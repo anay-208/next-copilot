@@ -9,7 +9,6 @@ import { fileURLToPath } from 'url';
 import { hints } from "./types.js";
 import fs from "node:fs";
 
-console.log(fs.readdirSync("."))
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
