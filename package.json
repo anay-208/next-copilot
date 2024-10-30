@@ -1,10 +1,10 @@
 {
-  "name": "blackbeard-extension",
-  "description": "A basic example of a Copilot Extension",
+  "name": "nextjs-copilot",
+  "description": "Copilot for nextjs",
   "scripts": {
     "compile": "tsc",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "dev": "cross-env NODE_ENV=development bun --watch src/index.ts"
+    "dev": "cross-env NODE_ENV=development bun --watch api/index.ts"
   },
   "type": "module",
   "dependencies": {

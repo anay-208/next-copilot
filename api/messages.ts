@@ -6,7 +6,7 @@ import {
 import { getAllFilesRelativePaths } from "./utils.js";
 import path from "node:path";
 import { fileURLToPath } from 'url';
-import { hints } from "./types.js";
+import { hints } from "./consts.js";
 import fs from "node:fs";
 
 
