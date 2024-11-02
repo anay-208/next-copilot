@@ -111,7 +111,10 @@ app.post("/", async (req, res) => {
     }
     messages.push({
       role: "system",
-      content: `Now, You need to help the user with this. Don't send any documentation links, and it should be related to App dir only! Try to only help the user with the topic, and don't give too much additional information.`,
+      content: `Now, You need to help the user with this. 
+      Don't send any documentation links, and it should be related to App dir only! 
+      Try to only help the user with the topic, and don't give too much additional information unless asked.
+      Note: Next.js is currently on v15`,
     });
   }
   // Use Copilot's LLM to generate a response to the user's messages, with
