@@ -1,5 +1,9 @@
 # Next-Copilot
 
+> Note: I primarily built this extension to learn more about extending github copilot with extensions
+> I personally don't use this extension much, and prefer to just go to the docs directly, as it gives incorrect info on some questions
+> If you're planning to ues this extension, feel free to, but please note that it can provide in valid information
+
 This extension will help you with Next.js app router. 
 
 It has the latest docs to assist you.
@@ -25,9 +29,6 @@ You can also support my work further by [sponsoring me!](https://github.com/spon
 
 # Why this extension
 
-I primarily built this extension so that one can:
-- Get Next.js Docs Directly from their Code editor
-- Get Direct Code examples from copilot
-
-
+I primarily built this extension to:
+- Learn More about Github Copilot extensions, I had no other project ideas
 
